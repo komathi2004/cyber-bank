@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Staff Details</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+            font-size: 28px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #0d47a1;
+            color: white;
+        }
+        tr:hover, .selected {
+            background: #bbdefb !important;
+        }
+        .button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px 20px;
+            background: #1e88e5;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #1565c0;
+        }
+        .delete-btn {
+            background: #d32f2f;
+            color: white;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .modal input {
+            width: 90%;
+            margin: 8px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .modal button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+        .modal .save {
+            background: #1e88e5;
+            color: white;
+            border-radius: 5px;
+        }
+        .modal .close {
+            background: #d32f2f;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bank Staff Details</h2>
+    <button class="button" onclick="showModal()">Add Staff Member</button>
+    <table id="staffTable">
+        <tr>
+            <th>Staff Name</th>
+            <th>Staff ID</th>
+            <th>Role</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Account Number</th>
+            <th>Salary/Month</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+    <div id="staffModal" class="modal">
+        <h3>Add Staff Member</h3>
+        <input type="text" id="name" placeholder="Staff Name">
+        <input type="text" id="role" placeholder="Role">
+        <input type="text" id="phone" placeholder="Phone Number">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="address" placeholder="Address">
+        <input type="text" id="account" placeholder="Account Number">
+        <input type="text" id="salary" placeholder="Salary/Month">
+        <button class="save" onclick="addStaff()">Save</button>
+        <button class="close" onclick="closeModal()">Close</button>
+    </div>
+    <script>
+        let staffData = [];
+        function populateTable() {
+            let table = document.getElementById("staffTable");
+            table.innerHTML = `<tr>
+                <th>Staff Name</th>
+                <th>Staff ID</th>
+                <th>Role</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Account Number</th>
+                <th>Salary/Month</th>
+                <th>Actions</th>
+            </tr>`;
+            staffData.forEach((staff, index) => {
+                let row = table.insertRow();
+                row.innerHTML = `<td>${staff.name}</td>
+                                 <td>${staff.id}</td>
+                                 <td>${staff.role}</td>
+                                 <td>${staff.phone}</td>
+                                 <td>${staff.email}</td>
+                                 <td>${staff.address}</td>
+                                 <td>${staff.account}</td>
+                                 <td>${staff.salary}</td>
+                                 <td><button class='delete-btn' onclick='deleteRow(${index})'>Delete</button></td>`;
+                row.onclick = () => highlightRow(row);
+            });
+        }
+        function highlightRow(row) {
+            document.querySelectorAll("tr").forEach(r => r.classList.remove("selected"));
+            row.classList.add("selected");
+        }
+        function showModal() {
+            document.getElementById("staffModal").style.display = "block";
+        }
+        function closeModal() {
+            document.getElementById("staffModal").style.display = "none";
+        }
+        function addStaff() {
+            let name = document.getElementById("name").value;
+            let role = document.getElementById("role").value;
+            let phone = document.getElementById("phone").value;
+            let email = document.getElementById("email").value;
+            let address = document.getElementById("address").value;
+            let account = document.getElementById("account").value;
+            let salary = document.getElementById("salary").value;
+            
+            let id = STF${staffData.length + 101};
+            if (name && role !== "Manager") {
+                staffData.push({ name, id, role, phone, email, address, account, salary });
+                populateTable();
+                closeModal();
+            }
+        }
+        function deleteRow(index) {
+            staffData.splice(index, 1);
+            populateTable();
+        }
+    </script>
+</body>
+</html>
