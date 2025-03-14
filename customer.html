@@ -175,8 +175,8 @@
                     <td>${customer.address}</td>
                     <td>${customer.balance}</td>
                     <td>
-                        <button onclick="editCustomer(${index})" style="background: #ffc107; color: black;">Edit</button>
-                        <button onclick="deleteCustomer(${index})">Delete</button>
+                        <button onclick="editCustomer(${index})" style="background: #ffc107; color: black; padding-left:25px align-item:center">Edit</button>
+                        <button onclick="deleteCustomer(${index})" style="margin-top:10px">Delete</button>
                     </td>`;
                 table.appendChild(row);
             });
@@ -205,6 +205,7 @@
     
         // Display initial 10 customers
         displayCustomers();
+        
     </script>
     
 </body>

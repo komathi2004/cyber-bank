@@ -3,99 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banking Notification System</title>
+    <title>Banking Notification Chat</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            background-color: #e8eaed;
             margin: 0;
             padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
         }
         .container {
-            width: 80%;
-            max-width: 800px;
+            width: 90%;
+            max-width: 1200px;
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-        }
-        .tab {
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
             display: flex;
-            justify-content: space-between;
-        }
-        .tab button {
-            width: 33%;
-            padding: 10px;
-            border: none;
-            background: #007bff;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .tab button:hover {
-            background: #0056b3;
-        }
-        .content {
-            display: none;
+            flex-direction: column;
             padding: 20px;
+            margin: 20px 0;
         }
-        .active {
-            display: block;
+        .header {
+            background: #1e3c72;
+            color: white;
+            padding: 25px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .notification {
-            padding: 10px;
+        .chat-box {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 20px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f1f1f1;
+        }
+        .section {
+            flex: 1;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            overflow-y: auto;
+        }
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
             margin-bottom: 10px;
-            border-left: 5px solid #007bff;
-            background: #e9f5ff;
+            padding: 10px;
+            background: #1e3c72;
+            color: white;
+            border-radius: 5px;
+            text-align: center;
+            position: sticky;
+            top: 0;
         }
-        .alert { border-left-color: red; background: #ffe9e9; }
-        .query { border-left-color: green; background: #e9ffe9; }
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            line-height: 1.6;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        .declaration { background: #d1e7ff; }
+        .alert { background: #ffcccc; }
+        .query { background: #d4edda; }
+        .time {
+            font-size: 13px;
+            color: #555;
+            display: block;
+            text-align: right;
+            font-style: italic;
+            margin-top: 5px;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .chat-box {
+                flex-direction: column;
+            }
+            .section {
+                max-height: 300px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Banking Notification System</h2>
-        <div class="tab">
-            <button onclick="showTab('declarations')">Declarations</button>
-            <button onclick="showTab('alerts')">Alerts</button>
-            <button onclick="showTab('queries')">Queries</button>
-        </div>
-        <div id="declarations" class="content active">
-            <div class="notification">As per the latest RBI guidelines, all branches must update KYC verification processes by April 08, 2025.</div>
-            <div class="notification">A new interest rate of 5% on fixed deposits has been introduced, effective from April 31, 2025.</div>
-            <div class="notification">All bank branches are required to implement the updated cybersecurity protocols by April 01, 2025.</div>
-            <div class="notification">New working hours: Monday to Saturday, 9:00 AM – 5:00 PM, effective from May 01, 2025.</div>
-            <div class="notification">Mandatory training on fraud prevention will be conducted on May 07 at RS Puram Branch.</div>
-        </div>
-        <div id="alerts" class="content">
-            <div class="notification alert">⚠ Security Alert: Suspicious login attempt detected on the branch network. Immediate action required!</div>
-            <div class="notification alert">⚠ ATM cash dispensing issue reported at Avinashi road. Technicians have been alerted.</div>
-            <div class="notification alert">⚠ Unauthorized transaction detected in ACC NO:4672988736. Please verify and take action.</div>
-            <div class="notification alert">⚠ Power outage expected on March 30, 2025. Backup generators will be in use.</div>
-            <div class="notification alert">⚠ System maintenance scheduled from 3:00 PM to 6:00 PM. Online banking services may be temporarily unavailable.</div>
-        </div>
-        <div id="queries" class="content">
-            <div class="notification query">🗨 Customer Prarthana: 'Can the bank extend working hours on weekends for senior citizens?'</div>
-            <div class="notification query">🗨 Customer Kanmani: 'The online banking app is slow. Can you improve transaction speed?'</div>
-            <div class="notification query">🗨 Customer Pradhisha: 'Need a separate queue for business account transactions during peak hours.'</div>
-            <div class="notification query">🗨 Customer Bindhya: 'ATM at Avinashi Road runs out of cash frequently. Can it be refilled more often?'</div>
-            <div class="notification query">🗨 Customer Sri Pavithra: 'It would be great if the branch offered more financial planning advisory services.'</div>
+        <div class="header">Banking Notifications</div>
+        <div class="chat-box">
+            <div class="section" id="declarations">
+                <div class="section-title">Declarations</div>
+            </div>
+            <div class="section" id="alerts">
+                <div class="section-title">Alerts</div>
+            </div>
+            <div class="section" id="queries">
+                <div class="section-title">Queries</div>
+            </div>
         </div>
     </div>
     <script>
-        function showTab(tabName) {
-            document.querySelectorAll('.content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tabName).classList.add('active');
+        const notifications = [
+            { type: "declaration", message: "As per the latest RBI guidelines, all branches must update KYC verification processes by April 08, 2025." },
+            { type: "declaration", message: "A new interest rate of 5% on fixed deposits has been introduced, effective from April 31, 2025." },
+            { type: "declaration", message: "All bank branches are required to implement the updated cybersecurity protocols by April 01, 2025." },
+            { type: "declaration", message: "New working hours: Monday to Saturday, 9:00 AM – 5:00 PM, effective from May 01, 2025." },
+            { type: "declaration", message: "Mandatory training on fraud prevention will be conducted on May 07 at RS Puram Branch." },
+            { type: "alert", message: "⚠ Unauthorized transaction detected in ACC NO:4672988736. Please verify and take action." },
+            { type: "alert", message: "⚠ Power outage expected on March 30, 2025. Backup generators will be in use, but some services may be affected." },
+            { type: "alert", message: "⚠ System maintenance scheduled from 3:00 PM to 6:00 PM. Online banking services may be temporarily unavailable." },
+            { type: "query", message: "🗨 Customer Prarthana: 'Can the bank extend working hours on weekends for senior citizens?'" },
+            { type: "query", message: "🗨 Customer Kanmani: 'The online banking app is slow. Can you improve transaction speed?'" },
+            { type: "query", message: "🗨 Customer Pradhisha: 'Need a separate queue for business account transactions during peak hours.'" },
+            { type: "query", message: "🗨 Customer Sri Pavithra: 'It would be great if the branch offered more financial planning advisory services.'" }
+        ];
+    
+        function getRandomTime() {
+            // Generate a random hour between 7 AM and 8 PM
+            const hour = Math.floor(Math.random() * 14) + 7;
+            
+            // Generate a random minute
+            const minute = Math.floor(Math.random() * 60);
+            
+            // Format the time
+            const hours = hour % 12 || 12; // Convert to 12-hour format
+            const minutes = minute.toString().padStart(2, '0');
+            const amPm = hour >= 12 ? "PM" : "AM";
+            
+            // Use March 14, 2025 as the consistent date
+            return `${hours}:${minutes} ${amPm}, March 14, 2025`;
         }
+    
+        function loadMessages() {
+            const sections = {
+                declaration: document.getElementById("declarations"),
+                alert: document.getElementById("alerts"),
+                query: document.getElementById("queries")
+            };
+    
+            notifications.forEach(notif => {
+                const div = document.createElement("div");
+                div.classList.add("message", notif.type);
+                
+                // Create message text
+                const messageText = document.createElement("p");
+                messageText.textContent = notif.message;
+                messageText.style.margin = "0";
+                
+                // Create time element with a unique random time
+                const timeSpan = document.createElement("span");
+                timeSpan.classList.add("time");
+                timeSpan.textContent = getRandomTime();
+                
+                // Append elements to the message div
+                div.appendChild(messageText);
+                div.appendChild(timeSpan);
+                
+                // Append message to the correct section
+                sections[notif.type].appendChild(div);
+            });
+        }
+    
+        // Call the function to load messages when the page loads
+        window.addEventListener('DOMContentLoaded', loadMessages);
     </script>
 </body>
 </html>

@@ -1,7 +1,4 @@
-/*Top Nav Bar*/
-/* Enhanced Navigation Bar Styles */
 
-/* Top Navbar Styles */
 .top-navbar {
     display: flex;
     justify-content: space-between; /* Changed from flex-end to allow for branding on left */
@@ -806,6 +803,8 @@ body {
     margin-left: var(--sidebar-width);
     transition: margin-left var(--transition-speed);
     padding: var(--header-height) 0 0 0;
+    min-height: 100vh; /* Use min-height instead of fixed height */
+    overflow-y: auto
 }
 
 .sidebar.collapsed ~ .main-content {
