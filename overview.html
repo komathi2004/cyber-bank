@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking Dashboard</title>
+    <style>
+        :root {
+            --primary: #1a73e8;
+            --secondary: #34a853;
+            --danger: #ea4335;
+            --warning: #fbbc05;
+            --light: #f8f9fa;
+            --dark: #202124;
+            --gray: #5f6368;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            margin-top: 50px;
+        }
+        
+        header {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .date-display {
+            color: var(--gray);
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-title {
+            font-size: 16px;
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .card-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .card-footer {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .positive {
+            color: var(--secondary);
+        }
+        
+        .negative {
+            color: var(--danger);
+        }
+        
+        .metric-icon {
+            background-color: rgba(26, 115, 232, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+            margin-right: 15px;
+            color: var(--primary);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            background-color: var(--primary);
+        }
+        
+        .employee-card {
+            grid-column: span 3;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .employee-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .employee-table th, .employee-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .employee-table th {
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+        }
+        
+        .employee-table tr:hover {
+            background-color: rgba(26, 115, 232, 0.05);
+        }
+        
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .active {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+        }
+        
+        .inactive {
+            background-color: rgba(234, 67, 53, 0.1);
+            color: var(--danger);
+        }
+        
+        .vip-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .vip {
+            background-color: #ffd700;
+        }
+        
+        .normal {
+            background-color: #e0e0e0;
+        }
+        
+        .star-rating {
+            color: #fbbc05;
+        }
+        
+        .loan-stats {
+            grid-column: span 3;
+            display: flex;
+            gap: 20px;
+        }
+        
+        .loan-chart {
+            flex: 1;
+            height: 200px;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 100%;
+        }
+        
+        .toggle-container {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 10px;
+        }
+        
+        .toggle-btn {
+            background-color: white;
+            border: 1px solid #ddd;
+            padding: 5px 10px;
+            margin-left: 5px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        
+        .toggle-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .loan-details {
+            grid-column: span 3;
+            margin-top: 20px;
+        }
+        
+        .loan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        
+        .loan-table th, .loan-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .loan-table th {
+            background-color: rgba(26, 115, 232, 0.1);
+            color: var(--primary);
+        }
+        
+        .loan-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+        
+        .approved {
+            background-color: rgba(52, 168, 83, 0.1);
+            color: var(--secondary);
+        }
+        
+        .rejected {
+            background-color: rgba(234, 67, 53, 0.1);
+            color: var(--danger);
+        }
+        
+        .pending {
+            background-color: rgba(251, 188, 5, 0.1);
+            color: var(--warning);
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .employee-card, .loan-stats, .loan-details {
+                grid-column: span 1;
+            }
+            
+            .loan-stats {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            
+            <div class="date-display" id="currentDate"></div>
+        </header>
+        
+        <div class="dashboard">
+            <!-- Total Deposits Card -->
+            <div class="card">
+                <div class="card-title">Total Deposits</div>
+                <div class="card-value">₹3,45,72,000</div>
+                <div class="card-footer">
+                    <span class="positive">↑ 3.2% from last month</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 82%"></div>
+                </div>
+            </div>
+            
+            <!-- Total Loans Card -->
+            <div class="card">
+                <div class="card-title">Total Loans Issued</div>
+                <div class="card-value">₹1,24,15,000</div>
+                <div class="card-footer">
+                    <span class="positive">↑ 1.8% from last month</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 65%"></div>
+                </div>
+            </div>
+            
+            <!-- Net Revenue Card -->
+            <div class="card">
+                <div class="card-title">Net Revenue</div>
+                <div class="card-value">₹1,39,78,000</div>
+                <div class="card-footer">
+                    <span class="positive">↑ 4.5% from last month</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 78%"></div>
+                </div>
+            </div>
+            
+            <!-- New Customers Card -->
+            <div class="card">
+                <div class="card-title">New Customers This Month</div>
+                <div class="card-value">213</div>
+                <div class="card-footer">
+                    <span class="positive">↑ 12.3% from last month</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 87%"></div>
+                </div>
+            </div>
+            
+            <!-- VIP Customers Card -->
+            <div class="card">
+                <div class="card-title">VIP Customers</div>
+                <div class="card-value">49</div>
+                <div class="card-footer">
+                    <span class="positive">↑ 2.8% from last month</span>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 62%"></div>
+                </div>
+            </div>
+            
+            <!-- Customer Satisfaction Card -->
+            <div class="card">
+                <div class="card-title">Customer Satisfaction Score</div>
+                <div class="card-value">4.7/5.0</div>
+                <div class="card-footer">
+                    <div class="star-rating">★★★★★</div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: 94%"></div>
+                </div>
+            </div>
+            
+            <!-- Employee Card -->
+            <div class="card employee-card">
+                <div class="employee-header">
+                    <h3>Employee Performance</h3>
+                    <div class="toggle-container">
+                        <button class="toggle-btn active" id="showAll">All</button>
+                        <button class="toggle-btn" id="showActive">Active</button>
+                        <button class="toggle-btn" id="showInactive">Inactive</button>
+                    </div>
+                </div>
+                <table class="employee-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Transactions</th>
+                            <th>Customer Rating</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTableBody">
+                        <!-- Employee data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Loan Statistics Card -->
+            <div class="card loan-stats">
+                <div class="loan-chart">
+                    <h3>Loan Approvals & Rejections</h3>
+                    <div class="chart-container" id="loanApprovalChart"></div>
+                </div>
+                <div class="loan-chart">
+                    <h3>Loan Types Distribution</h3>
+                    <div class="chart-container" id="loanTypesChart"></div>
+                </div>
+            </div>
+            
+            <!-- Loan Details Card -->
+            <div class="card loan-details">
+                <h3>Recent Loan Applications</h3>
+                <table class="loan-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Loan Type</th>
+                            <th>Amount (₹)</th>
+                            <th>Date Applied</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="loanTableBody">
+                        <!-- Loan data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script>
+        // Display current date
+        const dateDisplay = document.getElementById('currentDate');
+        const today = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        dateDisplay.textContent = today.toLocaleDateString('en-US', options);
+        
+        // Employee data - expanded with more employees
+        const employees = [
+            { name: 'Rajesh Kumar', position: 'Senior Loan Officer', transactions: 78, rating: 4.9, status: 'active' },
+            { name: 'Priya Sharma', position: 'Branch Manager', transactions: 65, rating: 4.8, status: 'active' },
+            { name: 'Amit Patel', position: 'Customer Service Rep', transactions: 92, rating: 4.7, status: 'active' },
+            { name: 'Deepa Gupta', position: 'Investment Advisor', transactions: 45, rating: 4.5, status: 'active' },
+            { name: 'Vikram Singh', position: 'Teller', transactions: 125, rating: 4.6, status: 'active' },
+            { name: 'Neha Verma', position: 'Loan Officer', transactions: 87, rating: 4.4, status: 'active' },
+            { name: 'Suresh Reddy', position: 'Relationship Manager', transactions: 56, rating: 4.3, status: 'active' },
+            { name: 'Meena Joshi', position: 'Teller', transactions: 108, rating: 4.2, status: 'active' },
+            { name: 'Arjun Das', position: 'Loan Officer', transactions: 12, rating: 3.8, status: 'inactive' },
+            { name: 'Kavita Rao', position: 'Teller', transactions: 18, rating: 3.9, status: 'inactive' },
+            { name: 'Sanjay Mishra', position: 'Customer Service Rep', transactions: 24, rating: 3.6, status: 'inactive' },
+            { name: 'Anjali Desai', position: 'Investment Advisor', transactions: 9, rating: 3.7, status: 'inactive' },
+            { name: 'Rahul Malhotra', position: 'Loan Officer', transactions: 15, rating: 3.5, status: 'inactive' }
+        ];
+        
+        // Loan data
+        const loanApplications = [
+            { customer: 'Ananya Mehta', type: 'Home Loan', amount: '32,50,000', date: '2025-03-10', status: 'approved' },
+            { customer: 'Karthik Rao', type: 'Personal Loan', amount: '3,75,000', date: '2025-03-12', status: 'pending' },
+            { customer: 'Shweta Singh', type: 'Business Loan', amount: '15,00,000', date: '2025-03-08', status: 'approved' },
+            { customer: 'Vivek Joshi', type: 'Education Loan', amount: '8,50,000', date: '2025-03-05', status: 'rejected' },
+            { customer: 'Sunita Patel', type: 'Vehicle Loan', amount: '5,20,000', date: '2025-03-11', status: 'pending' },
+            { customer: 'Prakash Sharma', type: 'Home Loan', amount: '42,00,000', date: '2025-03-07', status: 'approved' },
+            { customer: 'Nandini Kumar', type: 'Personal Loan', amount: '1,80,000', date: '2025-03-09', status: 'rejected' },
+            { customer: 'Dheeraj Reddy', type: 'Business Loan', amount: '22,50,000', date: '2025-03-14', status: 'pending' }
+        ];
+        
+        // Populate employee table
+        function populateEmployeeTable(filterStatus = 'all') {
+            const tableBody = document.getElementById('employeeTableBody');
+            tableBody.innerHTML = '';
+            
+            const filteredEmployees = filterStatus === 'all' 
+                ? employees 
+                : employees.filter(emp => emp.status === filterStatus);
+            
+            filteredEmployees.forEach(employee => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${employee.name}</td>
+                    <td>${employee.position}</td>
+                    <td>${employee.transactions}</td>
+                    <td>
+                        <div class="star-rating">${'★'.repeat(Math.round(employee.rating))}</div>
+                        ${employee.rating.toFixed(1)}
+                    </td>
+                    <td>
+                        <span class="status ${employee.status}">
+                            ${employee.status.charAt(0).toUpperCase() + employee.status.slice(1)}
+                        </span>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Populate loan table
+        function populateLoanTable() {
+            const tableBody = document.getElementById('loanTableBody');
+            
+            loanApplications.forEach(loan => {
+                const row = document.createElement('tr');
+                const date = new Date(loan.date);
+                const formattedDate = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                
+                row.innerHTML = `
+                    <td>${loan.customer}</td>
+                    <td>${loan.type}</td>
+                    <td>₹${loan.amount}</td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <span class="loan-status ${loan.status}">
+                            ${loan.status.charAt(0).toUpperCase() + loan.status.slice(1)}
+                        </span>
+                    </td>
+                `;
+                
+                tableBody.appendChild(row);
+            });
+        }
+        
+        // Create Loan Approval Chart
+        function createLoanApprovalChart() {
+            const approved = loanApplications.filter(loan => loan.status === 'approved').length;
+            const rejected = loanApplications.filter(loan => loan.status === 'rejected').length;
+            const pending = loanApplications.filter(loan => loan.status === 'pending').length;
+            
+            const ctx = document.createElement('canvas');
+            document.getElementById('loanApprovalChart').appendChild(ctx);
+            
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Approved', 'Rejected', 'Pending'],
+                    datasets: [{
+                        label: 'Loan Applications',
+                        data: [approved, rejected, pending],
+                        backgroundColor: [
+                            'rgba(52, 168, 83, 0.7)',
+                            'rgba(234, 67, 53, 0.7)',
+                            'rgba(251, 188, 5, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(52, 168, 83, 1)',
+                            'rgba(234, 67, 53, 1)',
+                            'rgba(251, 188, 5, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Create Loan Types Chart
+        function createLoanTypesChart() {
+            // Count loan types
+            const loanTypes = {};
+            loanApplications.forEach(loan => {
+                loanTypes[loan.type] = (loanTypes[loan.type] || 0) + 1;
+            });
+            
+            const ctx = document.createElement('canvas');
+            document.getElementById('loanTypesChart').appendChild(ctx);
+            
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: Object.keys(loanTypes),
+                    datasets: [{
+                        data: Object.values(loanTypes),
+                        backgroundColor: [
+                            'rgba(26, 115, 232, 0.7)',
+                            'rgba(52, 168, 83, 0.7)',
+                            'rgba(251, 188, 5, 0.7)',
+                            'rgba(234, 67, 53, 0.7)',
+                            'rgba(103, 58, 183, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(26, 115, 232, 1)',
+                            'rgba(52, 168, 83, 1)',
+                            'rgba(251, 188, 5, 1)',
+                            'rgba(234, 67, 53, 1)',
+                            'rgba(103, 58, 183, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right'
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Populate tables
+            populateEmployeeTable();
+            populateLoanTable();
+            
+            // Create charts
+            createLoanApprovalChart();
+            createLoanTypesChart();
+            
+            // Employee filter buttons
+            document.getElementById('showAll').addEventListener('click', function() {
+                document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                populateEmployeeTable('all');
+            });
+            
+            document.getElementById('showActive').addEventListener('click', function() {
+                document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                populateEmployeeTable('active');
+            });
+            
+            document.getElementById('showInactive').addEventListener('click', function() {
+                document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                populateEmployeeTable('inactive');
+            });
+        });
+    </script>
+</body>
+</html>
