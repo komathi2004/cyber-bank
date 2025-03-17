@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Staff Details</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f0f8ff;
+        }
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+            font-size: 28px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background: #0d47a1;
+            color: white;
+        }
+        tr:hover, .selected {
+            background: #bbdefb !important;
+        }
+        .button {
+            display: block;
+            margin: 10px auto;
+            padding: 12px 20px;
+            background: #0d47a1;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .button:hover {
+            background: #1565c0;
+        }
+        .delete-btn {
+            background: #d32f2f;
+            color: white;
+            padding: 5px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            margin-top: 15px;
+        }
+        .delete-btn:hover {
+            background: #b71c1c;
+        }
+        .edit-btn {
+            background: #ffc107;
+            color: black;
+            padding: 5px;
+            padding-left: 25px;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+            align-items: center;
+        }
+        .edit-btn:hover {
+            background: #ffb300;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+        }
+        .modal input {
+            width: 90%;
+            margin: 8px 0;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .modal button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 100%;
+            border: none;
+            cursor: pointer;
+        }
+        .modal .save {
+            background: #1e88e5;
+            color: white;
+            border-radius: 5px;
+        }
+        .modal .close {
+            background: #d32f2f;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bank Staff Details</h2>
+    <button class="button" onclick="showModal()">Add Staff Member</button>
+    <table id="staffTable">
+        <tr>
+            <th>Staff Name</th>
+            <th>Staff ID</th>
+            <th>Role</th>
+            <th>Phone Number</th>
+            <th>Email</th>
+            <th>Address</th>
+            <th>Account Number</th>
+            <th>Salary/Month</th>
+            <th>Actions</th>
+        </tr>
+    </table>
+    <div id="staffModal" class="modal">
+        <h3 id="modalTitle">Add Staff Member</h3>
+        <input type="text" id="name" placeholder="Staff Name">
+        <input type="text" id="role" placeholder="Role">
+        <input type="text" id="phone" placeholder="Phone Number">
+        <input type="email" id="email" placeholder="Email">
+        <input type="text" id="address" placeholder="Address">
+        <input type="text" id="account" placeholder="Account Number">
+        <input type="text" id="salary" placeholder="Salary/Month">
+        <button class="save" onclick="saveStaff()">Save</button>
+        <button class="close" onclick="closeModal()">Close</button>
+    </div>
+    <script>
+        let staffData = [
+            { name: "Alice Johnson", id: "STF101", role: "Manager", phone: "9876543210", email: "alice@bank.com", address: "New York", account: "ACC12345", salary: "₹70000" },
+            { name: "Bob Smith", id: "STF102", role: "Clerk", phone: "9876543211", email: "bob@bank.com", address: "California", account: "ACC12346", salary: "₹35000" },
+            { name: "Charlie Brown", id: "STF103", role: "Security", phone: "9876543212", email: "charlie@bank.com", address: "Texas", account: "ACC12347", salary: "₹25000" },
+            { name: "Emily Brown", dob: "1994-11-30", gender: "Female", account: "1234567893", ifsc: "IFSC004", micr: "MICR004", aadhar: "123456789015", email: "emily@example.com", contact: "9876543213", address: "Florida", balance: "₹4500" },
+            { name: "David Wilson", dob: "1988-07-19", gender: "Male", account: "1234567894", ifsc: "IFSC005", micr: "MICR005", aadhar: "123456789016", email: "david@example.com", contact: "9876543214", address: "Chicago", balance: "₹5500" },
+            { name: "Sophia Lee", dob: "1991-02-10", gender: "Female", account: "1234567895", ifsc: "IFSC006", micr: "MICR006", aadhar: "123456789017", email: "sophia@example.com", contact: "9876543215", address: "Seattle", balance: "₹8000" },
+            { name: "James Anderson", dob: "1987-09-14", gender: "Male", account: "1234567896", ifsc: "IFSC007", micr: "MICR007", aadhar: "123456789018", email: "james@example.com", contact: "9876543216", address: "Boston", balance: "₹6200" },
+            { name: "Olivia Martinez", dob: "1995-05-05", gender: "Female", account: "1234567897", ifsc: "IFSC008", micr: "MICR008", aadhar: "123456789019", email: "olivia@example.com", contact: "9876543217", address: "San Diego", balance: "₹9000" },
+            { name: "William Taylor", dob: "1993-12-25", gender: "Male", account: "1234567898", ifsc: "IFSC009", micr: "MICR009", aadhar: "123456789020", email: "william@example.com", contact: "9876543218", address: "Denver", balance: "₹4800" },
+            { name: "Ava Thomas", dob: "1989-06-18", gender: "Female", account: "1234567899", ifsc: "IFSC010", micr: "MICR010", aadhar: "123456789021", email: "ava@example.com", contact: "9876543219", address: "Las Vegas", balance: "₹7300" }
+        ];
+        let editIndex = -1;
+
+        function populateTable() {
+            let table = document.getElementById("staffTable");
+            table.innerHTML = `<tr>
+                <th>Staff Name</th>
+                <th>Staff ID</th>
+                <th>Role</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Account Number</th>
+                <th>Salary/Month</th>
+                <th>Actions</th>
+            </tr>`;
+            staffData.forEach((staff, index) => {
+                let row = table.insertRow();
+                row.innerHTML = `<td>${staff.name}</td>
+                                 <td>${staff.id}</td>
+                                 <td>${staff.role}</td>
+                                 <td>${staff.phone}</td>
+                                 <td>${staff.email}</td>
+                                 <td>${staff.address}</td>
+                                 <td>${staff.account}</td>
+                                 <td>${staff.salary}</td>
+                                 <td>
+                                      <button class='edit-btn' onclick='editStaff(${index})'>Edit</button>
+                                     <button class='delete-btn' onclick='deleteRow(${index})'>Delete</button>
+                                     
+                                 </td>`;
+            });
+        }
+
+        function showModal() {
+            document.getElementById("staffModal").style.display = "block";
+            document.getElementById("modalTitle").innerText = editIndex === -1 ? "Add Staff Member" : "Edit Staff Member";
+        }
+
+        
+            function closeModal() {
+                document.getElementById("staffModal").style.display = "none";
+                document.getElementById("name").value = "";
+                document.getElementById("role").value = "";
+                document.getElementById("phone").value = "";
+                document.getElementById("email").value = "";
+                document.getElementById("address").value = "";
+                document.getElementById("account").value = "";
+                document.getElementById("salary").value = "";
+                editIndex = -1;
+            }
+       
+
+        function saveStaff() {
+            let name = document.getElementById("name").value;
+            let role = document.getElementById("role").value;
+            let phone = document.getElementById("phone").value;
+            let email = document.getElementById("email").value;
+            let address = document.getElementById("address").value;
+            let account = document.getElementById("account").value;
+            let salary = `₹${document.getElementById("salary").value}`;
+
+            if (name && role) {
+                let staff = { name, id: editIndex === -1 ? `STF${staffData.length + 101}` : staffData[editIndex].id, role, phone, email, address, account, salary };
+                if (editIndex === -1) {
+                    staffData.push(staff);
+                } else {
+                    staffData[editIndex] = staff;
+                    editIndex = -1;
+                }
+                closeModal();
+                populateTable();
+            }
+        }
+
+        function editStaff(index) {
+            let staff = staffData[index];
+            document.getElementById("name").value = staff.name;
+            document.getElementById("role").value = staff.role;
+            document.getElementById("phone").value = staff.phone;
+            document.getElementById("email").value = staff.email;
+            document.getElementById("address").value = staff.address;
+            document.getElementById("account").value = staff.account;
+            document.getElementById("salary").value = staff.salary.replace('₹', '');
+            editIndex = index;
+            showModal();
+        }
+
+        function deleteRow(index) {
+            staffData.splice(index, 1);
+            populateTable();
+        }
+
+        populateTable();
+    </script>
+</body>
+</html>

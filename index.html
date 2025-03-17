@@ -1,0 +1,196 @@
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head>     
+    <meta charset="UTF-8">     
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">     
+    <title>TN Bank</title>     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">     
+    <link rel="stylesheet" href="./css/styles.css">
+    
+</head> 
+<body>     
+    <div class="container">
+        <!-- Top Navbar -->
+<div class="top-navbar">
+    <div class="brand-section">
+        <div class="brand-logo">
+            <i class="fas fa-university"></i>
+        </div>
+        <div class="brand-name">TN Bank</div>
+    </div>
+    
+    <div class="mobile-menu-toggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class="nav-actions">
+        <div class="search-container">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="          ......Search...">
+        </div>
+        
+        <div class="nav-item">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">3</span>
+        </div>
+        
+        <div class="nav-item theme-toggle">
+            <i class="fas fa-moon"></i>
+        </div>
+        
+        <div class="nav-item user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            
+            <div class="user-dropdown">
+                <div class="user-dropdown-header">
+                    <div class="user-dropdown-avatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="user-dropdown-info">
+                        <div class="user-dropdown-name">John Doe</div>
+                        <div class="user-dropdown-role">Manager</div>
+                    </div>
+                </div>
+                
+                <div class="user-dropdown-menu">
+                   <h6 class="user-dropdown-item" id="my-profile-btn">
+                        <i class="fas fa-user-avatar"></i> My Profile
+                    </h6>
+                   
+                    
+                    <h6 href="#" class="user-dropdown-item">
+                        <i class="fas fa-cog"></i> Settings
+                    </h6>
+                    <h6 href="#" class="user-dropdown-item">
+                        <i class="fas fa-question-circle"></i> Help Center
+                    </h6>
+                    <div class="user-dropdown-divider"></div>
+                    <h6 href="#" class="user-dropdown-item logout">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+         
+               
+        <nav class="sidebar">             
+            <div class="sidebar-header">                 
+                <h2>TN Bank</h2>             
+            </div>             
+            <div class="sidebar-menu">                 
+                <ul>                     
+                    <li><a href="./pay.html" target="content-frame"><i class="fas fa-tachometer-alt"></i>DashBoard Overview</a></li>                     
+                    <li><a href="./branch.html" target="content-frame"><i class="fas fa-university"></i>Branch Details</a></li>                     
+                    <li><a href="./staff.html" target="content-frame"><i class="fas fa-id-badge"></i> Staff Details</a></li>                     
+                    <li><a href="./customer.html" target="content-frame"><i class="fas fa-user-friends"></i> Customer Details</a></li>                     
+                    <li><a href="./notification.html" target="content-frame"><i class="fas fa-envelope"></i>  Notifications</a></li>  
+                    <li><a href="./analytics.html" target="content-frame"><i class="fas fa-chart-bar"></i>Analytics</a></li>                 
+               
+                </ul>             
+            </div>             
+            <div class="sidebar-footer">                 
+                <div class="user-info">                     
+                    <i class="fas fa-user-shield me-2"></i>                     
+                    <div class="user-details">                         
+                        <p class="user-name">Admin User</p>                         
+                        <p class="user-role">Administrator</p>                     
+                    </div>                 
+                </div>                 
+                <div class="logout">                     
+                    <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>                 
+                </div>             
+            </div>         
+        </nav>          
+        
+        <!-- Main Content Area -->         
+        <main class="main-content">             
+            <iframe name="content-frame" src="./paymt.html" frameborder="0" width="100%" height="100%"></iframe>         
+        </main>     
+    </div>   
+   
+  
+
+
+    <!-- The profile popup overlay -->
+<div id="overlay">
+    <div class="profile-popup">
+        <button class="close-btn"><i class="fas fa-times"></i></button>
+
+        <div class="profile-header">
+            <div class="profile-pic">
+                <img src="police.jpg" />
+            </div>
+            <h2 class="profile-name">Thomas Johnson</h2>
+            <p class="profile-title">Branch Manager</p>
+        </div>
+
+        <div class="profile-details">
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Employee ID</div>
+                    <div class="detail-value">BM-2023-4581</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Branch</div>
+                    <div class="detail-value">Downtown Financial Center</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Email</div>
+                    <div class="detail-value">t.johnson@bankname.com</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Phone</div>
+                    <div class="detail-value">+1 (555) 123-4567</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Years of Service</div>
+                    <div class="detail-value">12 years</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Address</div>
+                    <div class="detail-value">43, Gandhinagar, Coimbatore, 631208.</div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+
+            <div class="detail-item">
+                <div class="detail-content">
+                    <div class="detail-label">Contact Code</div>
+                    <div class="detail-value">
+                        <div class="contact-code">0xa021b78d4d31E02bDFOd3de5F66AfA62fa41</div>
+                    </div>
+                </div>
+                <i class="fas fa-pen edit-icon"></i>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="./js/main.js"></script> 
+
+</body> 
+</html>

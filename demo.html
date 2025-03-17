@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Manager Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #0066cc;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        /* The popup overlay */
+        #overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+           #overlay i{
+            margin-top: 15px;
+            
+         }        
+       /* The profile popup */
+        .profile-popup {
+            background-color: white;
+            width: 800px; /* Increased width */
+            height: 550px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: auto;
+        }
+        
+         /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            color: #666;
+            z-index: 10;
+        }
+        
+        /* Profile header section */
+        .profile-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            background-color: #f9f9f9;
+        }
+        
+        .profile-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #ddd;
+            margin: 0 auto 15px;
+            overflow: hidden;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .profile-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .profile-name {
+            margin: 0 0 5px 0;
+            font-size: 18px;
+        }
+        
+        .profile-title {
+            margin: 0 0 10px 0;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        /* Profile details section */
+        .profile-details {
+            padding: 15px;
+        }
+        
+        .detail-item {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .detail-content {
+            flex-grow: 1;
+        }
+        
+        .detail-label {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 3px;
+        }
+        
+        .detail-value {
+            font-size: 14px;
+        }
+        
+        .edit-icon {
+            color: #0066cc;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 50%;
+            transition: background-color 0.3s;
+        }
+        
+        .edit-icon:hover {
+            background-color: #f0f0f0;
+        }
+        
+        /* Contact code section */
+        .contact-code {
+            background-color: #f5f5f5;
+            padding: 8px;
+            border-radius: 4px;
+            font-family: monospace;
+            margin-top: 2px;
+            font-size: 11px;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bank Dashboard</h1>
+    
+    <!-- Button to open the profile popup -->
+    <button id="open-profile">View Bank Manager Profile</button>
+    
+    <!-- The profile popup overlay -->
+    <div id="overlay">
+        <div class="profile-popup">
+            <button class="close-btn"><i class="fas fa-times"></i></button>
+            
+            <div class="profile-header">
+                <div class="profile-pic">
+                    <img src="police.jpg"/>
+              </div>
+                <h2 class="profile-name">Thomas Johnson</h2>
+                <p class="profile-title">Branch Manager</p>
+            </div>
+            
+            <div class="profile-details">
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Employee ID</div>
+                        <div class="detail-value">BM-2023-4581</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Branch</div>
+                        <div class="detail-value">Downtown Financial Center</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Email</div>
+                        <div class="detail-value">t.johnson@bankname.com</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Phone</div>
+                        <div class="detail-value">+1 (555) 123-4567</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Years of Service</div>
+                        <div class="detail-value">12 years</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Address</div>
+                        <div class="detail-value">43,Gandhinagar,Coimbatore,631208.</div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+                
+                <div class="detail-item">
+                    <div class="detail-content">
+                        <div class="detail-label">Contact Code</div>
+                        <div class="detail-value">
+                            <div class="contact-code">0xa021b78d4d31E02bDFOd3de5F66AfA62fa41</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-pen edit-icon"></i>        
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Get elements
+        const openButton = document.getElementById('open-profile');
+        const overlay = document.getElementById('overlay');
+        const closeButton = document.querySelector('.close-btn');
+        const editIcons = document.querySelectorAll('.edit-icon');
+        
+        // Open popup when button is clicked
+        openButton.addEventListener('click', function() {
+            overlay.style.display = 'flex';
+        });
+        
+        // Close popup when close button is clicked
+        closeButton.addEventListener('click', function() {
+            overlay.style.display = 'none';
+        });
+        
+        // Close popup when clicking outside of it
+        overlay.addEventListener('click', function(event) {
+            if (event.target === overlay) {
+                overlay.style.display = 'none';
+            }
+        });
+        
+        // Add edit functionality
+        editIcons.forEach(icon => {
+            icon.addEventListener('click', function() {
+                const detailItem = this.closest('.detail-item');
+                const detailValue = detailItem.querySelector('.detail-value');
+                const currentValue = detailValue.textContent.trim();
+                const label = detailItem.querySelector('.detail-label').textContent;
+                
+                // Simple alert to demonstrate edit functionality
+                
+                // In a real application, you would show an input field here
+                // and save the changes to a database
+            });
+        });
+    </script>
+</body>
+</html>

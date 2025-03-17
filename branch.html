@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TN Bank - Branch Details</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin-top: 15px;
+        }
+        
+        nav ul li {
+            margin-right: 20px;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            color: #ffcc00;
+        }
+        
+        .main-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .branch-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        
+        .branch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .branch-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .branch-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .branch-code {
+            font-size: 16px;
+            opacity: 0.9;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+        
+        .branch-details {
+            padding: 25px;
+        }
+        
+        .detail-item {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .detail-icon {
+            width: 40px;
+            height: 40px;
+            background-color: #e8f0fe;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: #1e3c72;
+        }
+        
+        .detail-text {
+            flex: 1;
+        }
+        
+        .detail-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .bank-codes {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .code-item {
+            background-color: #f5f7fa;
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .action-btn {
+            padding: 12px 20px;
+            background-color: #1e3c72;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background-color: #2a5298;
+        }
+        
+        .map-container {
+            margin-top: 30px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .copy-tooltip {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+        }
+        
+        .tooltip-text {
+            visibility: hidden;
+            width: 120px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 12px;
+        }
+        
+        .copy-tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .copy-icon {
+            margin-left: 5px;
+            color: #2a5298;
+            cursor: pointer;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .branch-card {
+                width: 100%;
+            }
+            
+            .bank-codes {
+                flex-direction: column;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+            
+            .action-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="container">
+        <div class="main-content">
+            <div class="branch-card">
+                <div class="branch-header">
+                    <div class="branch-name">Avinashi Road Branch</div>
+                    <div class="branch-code">Branch Code: T33</div>
+                </div>
+                <div class="branch-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-text">
+                            <div class="detail-label">Branch Address</div>
+                            <div class="detail-value">480A, Avinashi Road, Coimbatore, 641004</div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">📞</div>
+                        <div class="detail-text">
+                            <div class="detail-label">Contact Number</div>
+                            <div class="detail-value">
+                                0422-2300600
+                                <span class="copy-tooltip" onclick="copyToClipboard('0422-2300600')">
+                                    📋
+                                    <span class="tooltip-text">Copy to clipboard</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">✉</div>
+                        <div class="detail-text">
+                            <div class="detail-label">Email ID</div>
+                            <div class="detail-value">
+                                tnbankavinashiroad@gmail.com
+                                <span class="copy-tooltip" onclick="copyToClipboard('tnbankavinashiroad@gmail.com')">
+                                    📋
+                                    <span class="tooltip-text">Copy to clipboard</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bank-codes">
+                        <div class="code-item">
+                            <div class="detail-label">IFSC Code</div>
+                            <div class="detail-value">
+                                TNBK0000269
+                                <span class="copy-tooltip" onclick="copyToClipboard('TNBK0000269')">
+                                    📋
+                                    <span class="tooltip-text">Copy to clipboard</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="code-item">
+                            <div class="detail-label">MICR Code</div>
+                            <div class="detail-value">
+                                641269134
+                                <span class="copy-tooltip" onclick="copyToClipboard('641269134')">
+                                    📋
+                                    <span class="tooltip-text">Copy to clipboard</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="actions">
+                        <button class="action-btn" onclick="showDirections()">
+                            <span>Get Directions</span>
+                        </button>
+                        <button class="action-btn" onclick="contactBranch()">
+                            <span>Contact Branch</span>
+                        </button>
+                        <button class="action-btn" onclick="showTimings()">
+                            <span>Branch Timings</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="map-container">
+                <!-- Replace the div with an iframe containing the map -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.824555995409!2d76.96365431499999!3d11.016395991999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85c4f4e4f4e4f%3A0x6a6a6a6a6a6a6a6a!2s480A%2C%20Avinashi%20Rd%2C%20Coimbatore%2C%20Tamil%20Nadu%20641004!5e0!3m2!1sen!2sin!4v1678900000000!5m2!1sen!2sin" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+            </div>
+        </div>
+    </div>
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showTooltip("Copied to clipboard!");
+            }, function() {
+                showTooltip("Failed to copy!");
+            });
+        }
+        
+        function showTooltip(message) {
+            const tooltips = document.querySelectorAll('.tooltip-text');
+            tooltips.forEach(tooltip => {
+                tooltip.textContent = message;
+                setTimeout(() => {
+                    tooltip.textContent = "Copy to clipboard";
+                }, 2000);
+            });
+        }
+        
+        function showDirections() {
+            alert("Opening directions to Avinashi Road Branch");
+            // In a real application, this would open a map with directions
+        }
+        
+        function contactBranch() {
+            alert("Contact options for Avinashi Road Branch:\n\nPhone: 0422-2300600\nEmail: tnbankavinashiroad@gmail.com");
+        }
+        
+        function showTimings() {
+            alert("Branch Timings:\n\nMonday to Friday: 10:00 AM - 4:00 PM\nSaturday: 10:00 AM - 1:00 PM\nSunday: Closed\n\nCash Transaction Hours:\nMonday to Friday: 10:00 AM - 3:00 PM\nSaturday: 10:00 AM - 12:30 PM");
+        }
+    </script>
+</body>
+</html>

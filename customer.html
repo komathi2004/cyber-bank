@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            color: #0d47a1;
+        }
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input, select, button {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0d47a1;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+        th {
+            background-color: #0d47a1;
+            color: white;
+        }
+        td button {
+            background-color: #dc3545;
+            border: none;
+            color: white;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        td button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <h2>Bank Customer Management</h2>
+    <form id="customerForm">
+        <input type="text" id="name" placeholder="Name" required>
+        <input type="date" id="dob" required>
+        <select id="gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="text" id="account" placeholder="Account Number" required>
+        <input type="text" id="ifsc" placeholder="IFSC Code" required>
+        <input type="text" id="micr" placeholder="MICR Code" required>
+        <input type="text" id="aadhar" placeholder="Aadhar Number" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="contact" placeholder="Contact" required>
+        <input type="text" id="address" placeholder="Address" required>
+        <div style="display: flex; align-items: center;">
+            <span style="font-size: 18px; margin-right: 5px;">₹</span>
+            <input type="number" id="balance" placeholder="Account Balance" required style="flex: 1;">
+        </div>
+        <button type="submit">Add Customer</button>
+    </form>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>DOB</th>
+                <th>Gender</th>
+                <th>Account Number</th>
+                <th>IFSC</th>
+                <th>MICR</th>
+                <th>Aadhar</th>
+                <th>Email</th>
+                <th>Contact</th>
+                <th>Address</th>
+                <th>Balance</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="customerTable">
+        </tbody>
+    </table>
+ <script>
+        let customers = [
+            { name: "John Doe", dob: "1990-05-10", gender: "Male", account: "1234567890", ifsc: "IFSC001", micr: "MICR001", aadhar: "123456789012", email: "john@example.com", contact: "9876543210", address: "New York", balance: "₹5000" },
+            { name: "Jane Smith", dob: "1992-08-15", gender: "Female", account: "1234567891", ifsc: "IFSC002", micr: "MICR002", aadhar: "123456789013", email: "jane@example.com", contact: "9876543211", address: "California", balance: "₹7000" },
+            { name: "Michael Johnson", dob: "1985-03-22", gender: "Male", account: "1234567892", ifsc: "IFSC003", micr: "MICR003", aadhar: "123456789014", email: "michael@example.com", contact: "9876543212", address: "Texas", balance: "₹6000" },
+            { name: "Emily Brown", dob: "1994-11-30", gender: "Female", account: "1234567893", ifsc: "IFSC004", micr: "MICR004", aadhar: "123456789015", email: "emily@example.com", contact: "9876543213", address: "Florida", balance: "₹4500" },
+            { name: "David Wilson", dob: "1988-07-19", gender: "Male", account: "1234567894", ifsc: "IFSC005", micr: "MICR005", aadhar: "123456789016", email: "david@example.com", contact: "9876543214", address: "Chicago", balance: "₹5500" },
+            { name: "Sophia Lee", dob: "1991-02-10", gender: "Female", account: "1234567895", ifsc: "IFSC006", micr: "MICR006", aadhar: "123456789017", email: "sophia@example.com", contact: "9876543215", address: "Seattle", balance: "₹8000" },
+            { name: "James Anderson", dob: "1987-09-14", gender: "Male", account: "1234567896", ifsc: "IFSC007", micr: "MICR007", aadhar: "123456789018", email: "james@example.com", contact: "9876543216", address: "Boston", balance: "₹6200" },
+            { name: "Olivia Martinez", dob: "1995-05-05", gender: "Female", account: "1234567897", ifsc: "IFSC008", micr: "MICR008", aadhar: "123456789019", email: "olivia@example.com", contact: "9876543217", address: "San Diego", balance: "₹9000" },
+            { name: "William Taylor", dob: "1993-12-25", gender: "Male", account: "1234567898", ifsc: "IFSC009", micr: "MICR009", aadhar: "123456789020", email: "william@example.com", contact: "9876543218", address: "Denver", balance: "₹4800" },
+            { name: "Ava Thomas", dob: "1989-06-18", gender: "Female", account: "1234567899", ifsc: "IFSC010", micr: "MICR010", aadhar: "123456789021", email: "ava@example.com", contact: "9876543219", address: "Las Vegas", balance: "₹7300" }
+        ];
+        let editIndex = -1;
+    
+        document.getElementById('customerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            let customer = {
+                name: document.getElementById('name').value,
+                dob: document.getElementById('dob').value,
+                gender: document.getElementById('gender').value,
+                account: document.getElementById('account').value,
+                ifsc: document.getElementById('ifsc').value,
+                micr: document.getElementById('micr').value,
+                aadhar: document.getElementById('aadhar').value,
+                email: document.getElementById('email').value,
+                contact: document.getElementById('contact').value,
+                address: document.getElementById('address').value,
+                balance: `₹${document.getElementById('balance').value}`
+            };
+    
+            if (editIndex === -1) {
+                customers.push(customer);
+            } else {
+                customers[editIndex] = customer;
+                editIndex = -1;
+            }
+    
+            document.getElementById('customerForm').reset();
+            displayCustomers();
+        });
+    
+        function displayCustomers() {
+            let table = document.getElementById('customerTable');
+            table.innerHTML = '';
+            customers.forEach((customer, index) => {
+                let row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${customer.name}</td>
+                    <td>${customer.dob}</td>
+                    <td>${customer.gender}</td>
+                    <td>${customer.account}</td>
+                    <td>${customer.ifsc}</td>
+                    <td>${customer.micr}</td>
+                    <td>${customer.aadhar}</td>
+                    <td>${customer.email}</td>
+                    <td>${customer.contact}</td>
+                    <td>${customer.address}</td>
+                    <td>${customer.balance}</td>
+                    <td>
+                        <button onclick="editCustomer(${index})" style="background: #ffc107; color: black; padding-left:25px align-item:center">Edit</button>
+                        <button onclick="deleteCustomer(${index})" style="margin-top:10px">Delete</button>
+                    </td>`;
+                table.appendChild(row);
+            });
+        }
+    
+        function editCustomer(index) {
+            let customer = customers[index];
+            document.getElementById('name').value = customer.name;
+            document.getElementById('dob').value = customer.dob;
+            document.getElementById('gender').value = customer.gender;
+            document.getElementById('account').value = customer.account;
+            document.getElementById('ifsc').value = customer.ifsc;
+            document.getElementById('micr').value = customer.micr;
+            document.getElementById('aadhar').value = customer.aadhar;
+            document.getElementById('email').value = customer.email;
+            document.getElementById('contact').value = customer.contact;
+            document.getElementById('address').value = customer.address;
+            document.getElementById('balance').value = customer.balance.replace('₹', '');
+            editIndex = index;
+        }
+    
+        function deleteCustomer(index) {
+            customers.splice(index, 1);
+            displayCustomers();
+        }
+    
+        // Display initial 10 customers
+        displayCustomers();
+        
+    </script>
+    
+</body>
+</html>
